@@ -24,3 +24,26 @@ GROUP BY (HOUR(created_at))
 
 
 
+--------------------------------------
+
+JOIN: 
+
+1) Come si chiamano gli ospiti che hanno fatto più di due prenotazioni?
+
+SELECT COUNT(`prenotazioni_has_ospiti`.`ospite_id`) , `ospiti`.`name` FROM `prenotazioni_has_ospiti`
+INNER JOIN `ospiti` 
+ON `ospiti`.`id` = `prenotazioni_has_ospiti`.`ospite_id`
+GROUP BY `prenotazioni_has_ospiti`.`ospite_id`
+HAVING COUNT(`prenotazioni_has_ospiti`.`ospite_id`) > 2
+
+
+
+
+2) Stampare tutti gli ospiti per ogni prenotazione
+
+SELECT `ospiti`.`name` , `ospiti`.`lastname` , `prenotazioni_has_ospiti`.`prenotazione_id`  FROM `ospiti`
+INNER JOIN  `prenotazioni_has_ospiti`
+ON `ospiti`.`id` = `prenotazioni_has_ospiti`.`ospite_id`
+
+
+3) 
