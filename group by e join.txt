@@ -18,7 +18,7 @@ GROUP BY (status)
 
 3) Conta quante volte è stata prenotata ogni stanza
 
-SELECT(stanza_id) AS "stanza" , COUNT(id) AS "prenotazioni"
+SELECT(stanza_id) AS "stanza" , COUNT(*) AS "prenotazioni"
 FROM prenotazioni
 GROUP BY stanza_id
 
@@ -68,4 +68,6 @@ WHERE YEAR(`prenotazioni`.`created_at`) = "2018" AND MONTH(`prenotazioni`.`creat
 
 -------
 
-4) 
+4) Fai la somma di tutti i prezzi delle prenotazioni per le stanze del primo piano
+5) Prendi i dati di fatturazione per la prenotazione con id=7
+6) Le stanze sono state tutte prenotate almeno una volta? (Visualizzare le stanze non ancora prenotate)
