@@ -1,22 +1,30 @@
 Group by
 
-Conta gli ospiti raggruppandoli per anno di nascita
+1) Conta gli ospiti raggruppandoli per anno di nascita
 
 SELECT COUNT(id) AS "persone", YEAR(date_of_birth) AS "anno di nascita"
 FROM ospiti
 GROUP BY YEAR(date_of_birth)
 
-Somma i prezzi dei pagamenti raggruppandoli per status
+------
+
+2) Somma i prezzi dei pagamenti raggruppandoli per status
+
 SELECT status AS "tipo di transazioni" , SUM(price) as "totale prezzo"
 FROM pagamenti
 GROUP BY (status)
-Conta quante volte è stata prenotata ogni stanza
+
+---------
+
+3) Conta quante volte è stata prenotata ogni stanza
 
 SELECT(stanza_id) AS "stanza" , COUNT(id) AS "prenotazioni"
 FROM prenotazioni
 GROUP BY stanza_id
 
-Fai una analisi per vedere se ci sono ore in cui le prenotazioni sono più frequenti
+---------
+
+4) Fai una analisi per vedere se ci sono ore in cui le prenotazioni sono più frequenti
 
 SELECT COUNT(*) , (HOUR(created_at))
 FROM prenotazioni
@@ -24,7 +32,7 @@ GROUP BY (HOUR(created_at))
 
 
 
---------------------------------------
+-----------------------------------------------
 
 JOIN: 
 
@@ -36,7 +44,7 @@ ON `ospiti`.`id` = `prenotazioni_has_ospiti`.`ospite_id`
 GROUP BY `prenotazioni_has_ospiti`.`ospite_id`
 HAVING COUNT(`prenotazioni_has_ospiti`.`ospite_id`) > 2
 
-
+------
 
 
 2) Stampare tutti gli ospiti per ogni prenotazione
@@ -45,5 +53,19 @@ SELECT `ospiti`.`name` , `ospiti`.`lastname` , `prenotazioni_has_ospiti`.`prenot
 INNER JOIN  `prenotazioni_has_ospiti`
 ON `ospiti`.`id` = `prenotazioni_has_ospiti`.`ospite_id`
 
+------
 
-3) 
+3) Stampare Nome, Cognome, Prezzo e Pagante per tutte le prenotazioni fatte a Maggio 2018
+
+SELECT `price` , `paganti`.`name` AS "nome pagante" , `paganti`.`lastname` AS "cognome pagante" ,`ospiti`.`name` AS "nome ospite", `ospiti`.`lastname` AS "cognome ospite" , `prenotazioni`.`created_at` AS "data" FROM `pagamenti`
+INNER JOIN `paganti` 
+ON `paganti`.`id` = `pagamenti`.`pagante_id` 
+INNER JOIN `ospiti` 
+ON `paganti`.`ospite_id` = `ospiti`.`id`
+INNER JOIN `prenotazioni`
+ON `prenotazioni`.`id` = `pagamenti`.`prenotazione_id`
+WHERE YEAR(`prenotazioni`.`created_at`) = "2018" AND MONTH(`prenotazioni`.`created_at`) = "05"
+
+-------
+
+4) 
